@@ -1,9 +1,14 @@
 
 const player = document.querySelector('#player');
+player.velocity = 0;  // > 0 down, < 0 UP
+player.falling = false;
+player.jumped = false;
+const floors = document.querySelectorAll('.floor');
 let buttonsState = {'right': false, 'left': false, 'space': false};
 const speed = 5;
+const jumpSpeed = 8;
+const gravityFactor = 0.5;
 
-let playerVelocity = 0; // > 0 down, < 0 UP
 function update() {
     if (buttonsState.right) {
         setX(player, getX(player) + speed);
@@ -11,17 +16,63 @@ function update() {
         setX(player, getX(player) - speed);
     }   
 
-    setY(player, getY(player) + playerVelocity);
-
-    if (playerVelocity < 0) {
-        playerVelocity += 0.1;
+    if (isStoppedInTheAir(player)) {
+        player.falling = true;
     }
+
+    player.velocity += gravityFactor// gravity
+    if (player.falling) {
+        player.velocity += gravityFactor; // double it when falling
+    }
+
+    if (!isCollidingBottom(player) && player.velocity == 0) {
+        player.velocity = 0.1;
+    } 
+    
+
+    const bottom = isCollidingBottom(player);
+    if (!player.jumped && bottom) {
+        
+        console.log(bottom);
+        console.log(player.velocity);
+
+        player.velocity = 0;
+        setY(player, getY(player) - bottom);
+    }
+
+    player.jumped = false;
+
+    setY(player, getY(player) + player.velocity);
 }
 
-function jump() {
-    playerVelocity -= 10;
+
+function isStoppedInTheAir(player) {
+    return !isCollidingBottom(player) && 
+        player.velocity < 0 && 
+        player.velocity + gravityFactor > 0;
 }
 
+function isCollidingBottom(obj) {
+    const pX = getX(obj);
+    const pW = getWidth(obj);
+    const pY = getY(obj);
+    const pH = getHeight(obj);
+
+    for (floor of floors) {
+        const d = dist(pY + pH, getY(floor));        
+        if (pY + pH >= getY(floor) && 
+            pY + pH <= getY(floor) + getHeight(floor) && 
+            ((pX >= getX(floor) && 
+            pX <= getX(floor) + getWidth(floor)) ||
+            (pX + pW >= getX(floor) &&
+            pX + pW <= getX(floor) + getWidth(floor)))
+            ) {
+            return d;
+        }
+    }
+
+    return 0;
+}
 function mainLoop() {
     update();
     requestAnimationFrame(mainLoop);
@@ -34,7 +85,7 @@ function onKeyDown(e) {
         buttonsState.left = true;
     } else if (e.key == ' ') {
         if (buttonsState.space == false) {
-            jump();
+            jump(jumpSpeed);
         }
         buttonsState.space = true;
     }
@@ -54,6 +105,21 @@ document.addEventListener('keydown', onKeyDown)
 document.addEventListener('keyup', onKeyUp);
 requestAnimationFrame(mainLoop);
 
+
+function isEpsilon(number) {
+    return Math.abs(number) < 1e-4;
+}
+
+function dist(a, b) {
+    return a - b;
+}
+
+function jump(amount) {
+    player.velocity = -jumpSpeed;
+    player.falling = false;
+    player.jumped = true;
+}
+
 function setX(obj, val) {
     obj.setAttribute("x", val);
 }
@@ -63,9 +129,17 @@ function setY(obj, val) {
 }
 
 function getX(obj) {
-    return parseInt(obj.getAttribute("x"));
+    return parseFloat(obj.getAttribute("x"));
 }
 
 function getY(obj) {
-    return parseInt(obj.getAttribute("y"));
+    return parseFloat(obj.getAttribute("y"));
+}
+
+function getWidth(obj) {
+    return parseFloat(obj.getAttribute("width"));
+}
+
+function getHeight(obj) {
+    return parseFloat(obj.getAttribute("height"));
 }
