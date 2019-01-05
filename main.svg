@@ -5,13 +5,53 @@
      xmlns:xs="http://www.w3.org/2001/XMLSchema"
      xmlns:math="http://www.w3.org/2005/xpath-functions/math"
      xmlns="http://www.w3.org/2000/svg"
-     width="800"
+     width="900"
      height="600"
      style="background-image: url(bg.png); background-repeat: repeat-x; background-position: bottom">
 
+  <script xlink:href="clock.js" />
 
-  <rect class="floor" x="0" y="594" width="650" height="6" style="fill:blue; opacity: 0.5" />
-  <rect class="floor" x="780" y="594" width="20" height="6" style="fill:blue; opacity: 0.5" />
-  <rect class="floor" x="20" y="550" width="30" height="20" style="background: url(block.png)"/>
+  <rect class="floor" x="0" y="594" width="550" height="6" style="fill:blue; opacity: 0.5" />
+  <rect class="floor" x="780" y="594" width="120" height="6" style="fill:blue; opacity: 0.5" />
+  <rect class="floor" x="550" y="580" width="230" height="20" style="fill: #5e91fe" />
+  
+
+  <rect class="floor" x="200" y="530" width="20" height="20" fill="url(#block)"/>
+
+  <rect class="floor" x="100" y="470" width="20" height="20" fill="url(#block)"/>
+
+  <rect class="floor" x="20" y="420" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="40" y="420" width="20" height="20" fill="url(#block)"/>
+
+  <rect class="floor" x="150" y="380" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="170" y="380" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="190" y="380" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="210" y="380" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="230" y="380" width="20" height="20" fill="url(#block)"/>
+
+
+
+  <rect class="floor" x="400" y="350" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="420" y="350" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="440" y="350" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="460" y="350" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="480" y="350" width="20" height="20" fill="url(#block)"/>
+  <rect class="floor" x="500" y="350" width="20" height="20" fill="url(#block)"/>
+
+  <rect class="flag" x="850" y="525" width="37" height="70" fill="url(#flag)" />
+
+  <rect class="stopwatch" x="0" y="0" width="100" height="45" style="fill: white; opacity: 0.5" />
+
+  <defs>
+    <pattern id="block" patternUnits="objectBoundingBox" width="20" height="20">
+      <image xlink:href="block.png" x="0" y="0" width="20" height="20" />
+    </pattern>
+  </defs>
+
+  <defs>
+    <pattern id="flag" patternUnits="objectBoundingBox" width="37" height="70">
+      <image xlink:href="flag.png" x="0" y="0" width="37" height="70" />
+    </pattern>
+  </defs>
 
 </svg>
