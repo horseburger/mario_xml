@@ -70,7 +70,7 @@ class Stopwatch {
     }
     
     print() {
-        this.display.innerText = this.format(this.times);
+        this.display.textContent = this.format(this.times);
     }
     
     format(times) {
@@ -92,7 +92,3 @@ function clearChildren(node) {
     while (node.lastChild)
         node.removeChild(node.lastChild);
 }
-
-let stopwatch = new Stopwatch(
-    document.querySelector('.stopwatch'),
-    document.querySelector('.results'));
