@@ -14,10 +14,6 @@
     animation: fly2 30s infinite alternate;
 }
 
-#gover_screen {
-    filter: blur(0);
-}
-
 @keyframes fly {
 	0% {transform: translateX(-250px)}
 	100% {transform: translateX(400px)}

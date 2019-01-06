@@ -66,9 +66,9 @@
   <rect class="flag" x="850" y="525" width="37" height="70" fill="url(#flag)" />
 
 
-  <rect id="gameWinBox" x="210" y="140" width="480" height="360" fill="url(#win)" style="display: none;" />
+  <rect id="gameWinBox" x="325" y="240" width="480" height="360" fill="url(#win)" style="display: none;" />
   <rect id="gameOverBox" x="210" y="140" width="480" height="360" fill="url(#g_over)" style="display: none;" />
-  <rect id="restartGame" x="370" y="380" width="160" height="40" />
+  <rect id="restartGame" x="370" y="380" width="170" height="40" />
 
   <rect id="player" x="50" y="525" width="23" height="35" fill="url(#mag)"/>
 
