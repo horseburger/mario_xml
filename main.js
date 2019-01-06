@@ -5,6 +5,10 @@ const Height = 600;
 const State = {'Running': 1, 'Died': 2, 'Win': 3}
 let GameState = State.Running;
 
+const timer = document.querySelector('.stopwatchText');
+const stopwatch = new Stopwatch(timer, null);
+stopwatch.start();
+
 class Entity {
     constructor(svg) {
         this.svg = svg;
@@ -56,6 +60,7 @@ class Flag extends Entity {
     onPlayerTouch() {
         if (!this.wasTouched) {
             this.wasTouched = true;
+            stopwatch.stop();
             setTimeout(() => gameWin(), 1000);
         }
         
@@ -236,6 +241,7 @@ function gameOver() {
     GameState = State.Died;
     document.querySelector('#gameOverBox').style.display = 'block';
     document.querySelector('#restartGame').style.display = 'block';
+    stopwatch.stop();
 }
 
 function gameWin() {
@@ -285,6 +291,7 @@ function onGameRestart(e) {
     document.querySelector('#restartGame').style.display = 'none';
     GameState = State.Running;
     flags.forEach((f) => f.wasTouched = false);
+    stopwatch.restart();
     mainLoop();
 }
 
@@ -292,6 +299,8 @@ document.addEventListener('keydown', onKeyDown)
 document.addEventListener('keyup', onKeyUp);
 document.querySelector('#restartGame').addEventListener('click', onGameRestart);
 requestAnimationFrame(mainLoop);
+
+
 
 function isEpsilon(number) {
     return Math.abs(number) < 1e-4;
