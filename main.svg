@@ -69,7 +69,7 @@
   <rect id="gameOverBox" class="gameWinBox" x="210" y="140" width="480" height="360" fill="url(#g_over)" style="display: none;" />
   <rect id="restartGame" x="370" y="380" width="160" height="40" />
 
-  <rect id="player" x="50" y="525" width="33" height="50" fill="url(#mag)"/>
+  <rect id="player" x="50" y="525" width="23" height="35" fill="url(#mag)"/>
 
   <rect class="stopwatchBox" x="0" y="0" width="100" height="45" style="fill: white; opacity: 0.5" />
   <text class="stopwatchText" x="10" y="30" font-size="30" fill="black">
@@ -95,7 +95,13 @@
 
     <defs>
     <pattern id="mag" patternUnits="objectBoundingBox" width="1" height="1">
-      <image xlink:href="mag_czarodziej.png" x="0" y="0" width="33" height="50" />
+      <image xlink:href="mag_czarodziej.png" x="0" y="0" width="23" height="35" />
+    </pattern>
+  </defs>
+
+  <defs>
+    <pattern id="win" patternUnits="objectBoundingBox" width="1" height="1">
+      <image xlink:href="you_win.png" x="0" y="0" width="255" height="255" />
     </pattern>
   </defs>
 
