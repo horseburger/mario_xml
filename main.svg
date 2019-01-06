@@ -1,5 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<?xml-stylesheet href="styles.css" type="text/css"?>
+
 
 <svg xmlns:xlink="http://www.w3.org/1999/xlink"
      xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -53,5 +55,28 @@
       <image xlink:href="flag.png" x="0" y="0" width="37" height="70" />
     </pattern>
   </defs>
+
+	<defs>
+	<filter id="filter" x="0" y="0">
+	<feGaussianBlur stdDeviation=".4"/>
+	</filter>
+	
+ </defs>
+
+  <circle id="cloud" cx="350" cy="80" r="25" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="330" cy="120" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="290" cy="100" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="380" cy="125" r="15" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="420" cy="115" r="17" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="405" cy="65" r="13" fill="#ffccff" filter="url(#filter)"/>
+
+  <circle id="cloud2" cx="550" cy="280" r="25" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="570" cy="320" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="590" cy="280" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="520" cy="305" r="15" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="480" cy="295" r="17" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="495" cy="245" r="13" fill="#ffccff" filter="url(#filter)"/>
+    
+
 
 </svg>
