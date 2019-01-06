@@ -1,0 +1,31 @@
+
+#cloud {
+	position:relative;
+	top: calc(50vh - 100px);
+	left: calc(50vw - 200px);
+	animation: fly 30s infinite alternate;
+}
+
+#block {
+    z-index: 1;
+}
+
+#cloud2 {
+	position:relative;
+	top: calc(50vh - 100px);
+	left: calc(50vw - 200px);
+    animation: fly2 30s infinite alternate;
+    z-index: 2;
+}
+
+@keyframes fly {
+	0% {transform: translateX(-250px)}
+	100% {transform: translateX(400px)}
+}
+
+@keyframes fly2 {
+	0% {transform: translateX(400px)}
+	100% {transform: translateX(-350px)}
+}
+
+
