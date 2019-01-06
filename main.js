@@ -70,6 +70,8 @@ const floors = [...base, ...flags];
 class Player extends Entity {
     constructor(svg) {
         super(svg);
+        this.baseX  = this.getX();
+        this.baseY = this.getY();
         this.sideSpeed = 5.0;
         this.jumpSpeed = 15;
         
@@ -267,8 +269,20 @@ function onKeyUp(e) {
     buttonsStateChanged(previousButtons, buttonsState);
 }
 
+function onGameRestart(e) {
+    player.setX(player.baseX);
+    player.setY(player.baseY);
+    document.querySelector('.gameOverBox').style.display = 'none';
+    document.querySelector('.gameWinBox').style.display = 'none';
+    document.querySelector('.restartGame').style.display = 'none';
+    GameState = State.Running;
+    flags.forEach((f) => f.wasTouched = false);
+    mainLoop();
+}
+
 document.addEventListener('keydown', onKeyDown)
 document.addEventListener('keyup', onKeyUp);
+document.addEventListener('click', onGameRestart);
 requestAnimationFrame(mainLoop);
 
 function isEpsilon(number) {
