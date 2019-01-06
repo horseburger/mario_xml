@@ -71,7 +71,7 @@
 
   <rect id="player" x="50" y="525" width="33" height="50" fill="url(#mag)"/>
 
-  <rect class="stopwatchBox" x="0" y="0" width="100" height="45" style="fill: white; opacity: 0.5" />
+  <rect class="stopwatchBox" x="0" y="0" width="130" height="45" style="fill: white; opacity: 0.5" />
   <text class="stopwatchText" x="10" y="30" font-size="30" fill="black">
     00:00
   </text>
