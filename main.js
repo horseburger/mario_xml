@@ -1,97 +1,145 @@
 
-const player = document.querySelector('#player');
-player.velocity = 0;  // > 0 down, < 0 UP
-player.falling = false;
-player.jumped = false;
-const floors = document.querySelectorAll('.floor');
+
+
+
 let buttonsState = {'right': false, 'left': false, 'space': false};
-const speed = 5;
-const jumpSpeed = 8;
-const gravityFactor = 0.5;
+const GravityFactor = 0.5;
 
-function update() {
-    if (buttonsState.right) {
-        setX(player, getX(player) + speed);
-    } else if (buttonsState.left) {
-        setX(player, getX(player) - speed);
-    }   
-
-    if (isStoppedInTheAir(player)) {
-        player.falling = true;
+class Entity {
+    constructor(svg) {
+        this.svg = svg;
     }
 
-    player.velocity += gravityFactor// gravity
-    if (player.falling) {
-        player.velocity += gravityFactor; // double it when falling
+    setX(val) {
+        this.svg.setAttribute("x", val);
     }
 
-    if (!isCollidingBottom(player) && player.velocity == 0) {
-        player.velocity = 0.1;
-    } 
-    
+    setY(val) {
+        this.svg.setAttribute("y", val);
+    }
 
-    const bottom = isCollidingBottom(player);
-    if (!player.jumped && bottom) {
+    getX() {
+        return parseFloat(this.svg.getAttribute("x"));
+    }
+
+    getY() {
+        return parseFloat(this.svg.getAttribute("y"));
+    }
+
+    getWidth() {
+        return parseFloat(this.svg.getAttribute("width"));
+    }
+
+    getHeight() {
+        return parseFloat(this.svg.getAttribute("height"));
+    }
+}
+
+
+const floors = [...document.querySelectorAll('.floor')].map((f) => new Entity(f));
+
+class Player extends Entity {
+    constructor(svg) {
+        super(svg);
+        this.sideSpeed = 5.0;
+        this.jumpSpeed = 15;
         
-        console.log(bottom);
-        console.log(player.velocity);
+        this.rightMovement = false;
+        this.leftMovement = false;
 
-        player.velocity = 0;
-        setY(player, getY(player) - bottom);
+        this.jump = false;
+        this.currentVelocity = 0;
     }
 
-    player.jumped = false;
+    onButtonsStateChanged(prev, next) {
+        this.rightMovement = next.right;
+        this.leftMovement = next.left;
 
-    setY(player, getY(player) + player.velocity);
-}
 
-
-function isStoppedInTheAir(player) {
-    return !isCollidingBottom(player) && 
-        player.velocity < 0 && 
-        player.velocity + gravityFactor > 0;
-}
-
-function isCollidingBottom(obj) {
-    const pX = getX(obj);
-    const pW = getWidth(obj);
-    const pY = getY(obj);
-    const pH = getHeight(obj);
-
-    for (floor of floors) {
-        const d = dist(pY + pH, getY(floor));        
-        if (pY + pH >= getY(floor) && 
-            pY + pH <= getY(floor) + getHeight(floor) && 
-            ((pX >= getX(floor) && 
-            pX <= getX(floor) + getWidth(floor)) ||
-            (pX + pW >= getX(floor) &&
-            pX + pW <= getX(floor) + getWidth(floor)))
-            ) {
-            return d;
+        if (!prev.space && next.space) {
+            this.jump = true;
         }
     }
 
-    return 0;
+    moveSides() {
+        let delta = 0;
+        if (this.rightMovement) {
+            delta += this.sideSpeed;
+        }
+        if (this.leftMovement) {
+            delta -= this.sideSpeed;
+        }
+
+        this.setX(this.getX() + delta);
+    }
+
+    isAfterFloor(x, y, floor) {
+        const pY = y + this.getHeight();
+        const pX = x + this.getWidth();
+
+        if (pX < floor.getX()) return false;
+        if (x > floor.getX() + floor.getWidth()) return false;
+
+        if (pY - floor.getY() > -0.5) {
+            return true;
+        }
+
+        return false;
+    }
+    update() {
+        this.moveSides();
+        
+        this.currentVelocity += GravityFactor;
+        if (this.jump) {
+            this.currentVelocity = -this.jumpSpeed;
+            this.jump = false;
+        }
+
+        for (let floor of floors) {
+            if (!this.isAfterFloor(this.getX(), this.getY(), floor)
+                && this.isAfterFloor(this.getX(), this.getY() + this.currentVelocity, floor)) {
+                this.currentVelocity = 0;
+                break;
+            }
+        }
+        
+
+        this.setY(this.getY() + this.currentVelocity);
+
+    }
 }
+
+
+const player = new Player(document.querySelector('#player'));
+
+function update() {
+    player.update();
+}
+
+function buttonsStateChanged(prev, next)  {
+    player.onButtonsStateChanged(prev, next);
+}
+
 function mainLoop() {
     update();
     requestAnimationFrame(mainLoop);
 }
 
 function onKeyDown(e) {
+    const previousButtons = {...buttonsState};
     if (e.key == 'ArrowRight') {
         buttonsState.right = true;
     } else if (e.key == 'ArrowLeft') {
         buttonsState.left = true;
     } else if (e.key == ' ') {
-        if (buttonsState.space == false) {
-            jump(jumpSpeed);
-        }
         buttonsState.space = true;
     }
+
+    buttonsStateChanged(previousButtons, buttonsState);
 }
 
 function onKeyUp(e) {
+    const previousButtons = {...buttonsState};
     if (e.key == 'ArrowRight') {
         buttonsState.right = false;
     } else if (e.key == 'ArrowLeft') {
@@ -99,47 +147,14 @@ function onKeyUp(e) {
     } else if (e.key == ' ') {
         buttonsState.space = false;
     }
+
+    buttonsStateChanged(previousButtons, buttonsState);
 }
 
 document.addEventListener('keydown', onKeyDown)
 document.addEventListener('keyup', onKeyUp);
 requestAnimationFrame(mainLoop);
 
-
 function isEpsilon(number) {
     return Math.abs(number) < 1e-4;
-}
-
-function dist(a, b) {
-    return a - b;
-}
-
-function jump(amount) {
-    player.velocity = -jumpSpeed;
-    player.falling = false;
-    player.jumped = true;
-}
-
-function setX(obj, val) {
-    obj.setAttribute("x", val);
-}
-
-function setY(obj, val) {
-    obj.setAttribute("y", val);
-}
-
-function getX(obj) {
-    return parseFloat(obj.getAttribute("x"));
-}
-
-function getY(obj) {
-    return parseFloat(obj.getAttribute("y"));
-}
-
-function getWidth(obj) {
-    return parseFloat(obj.getAttribute("width"));
-}
-
-function getHeight(obj) {
-    return parseFloat(obj.getAttribute("height"));
 }
