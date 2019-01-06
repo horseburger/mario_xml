@@ -67,12 +67,12 @@
 
 
   <rect class="gover_screen" x="210" y="140" width="480" height="360" fill="url(#g_over)" style="opacity: 1" />
-  <rect id="button" onclick="tmp(evt)" x="370" y="380" width="160" height="40" style="opacity: 0"/>
+  <rect id="button" onclick="tmp()" x="370" y="380" width="160" height="40" style="opacity: 0"/>
 
   <script type="text/emacsript">
   <![CDATA[
 
-  function tmp(evt){
+  function tmp(){
     var element = document.querySelector('#button');
     element.setAttribute("style", "fill: red; opacity: 1");
   }
