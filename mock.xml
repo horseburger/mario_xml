@@ -5,9 +5,37 @@
      xmlns="http://www.w3.org/2000/svg"
      width="800"
      height="600">
+    <style>
+        .gameOverBox, .restartGame, .gameWinBox {
+            display: none;
+        }
+
+        g.restartGame:hover text {
+            font-weight: bold;
+        }
+    </style>
 
     <rect class="floor" x="0" y="550" width="800" height="50" fill="black" />
-    <rect class="floor" x="200" y="300" width="200" height="30" fill="black" />
+    <rect class="floor" x="200" y="350" width="200" height="30" fill="black" />
+    <rect class="floor" x="500" y="250" width="200" height="30" fill="black" />
+
+    <g class="gameOverBox">
+        <rect x="240" y="240" width="320" height="80" fill="blue" />
+        <text textLength="300" x="250" y="300" font-size="50" font-family="Verdana" fill="red">GAME OVER</text>
+    </g>
+
+    <g class="gameWinBox">
+        <rect x="240" y="240" width="320" height="80" fill="blue" />
+        <text textLength="300" x="250" y="300" font-size="50" font-family="Verdana" fill="red">CONGRATZ!</text>
+    </g>
+
+    <g class="restartGame">
+        <rect x="320" y="360" width="160" height="60" fill="yellow"/>
+        <text textLength="140" x="330" y="400" font-size="30" font-family="Arial" fill="green" >RESTART</text>
+    </g>
+
+    <rect class="flag" x="600" y="400" width="20" height="150" fill="green" />
+
     <rect id="player" x="50" y="350" width="50" height="100" />
     <script xlink:href="main.js" />
 </svg>
