@@ -6,16 +6,16 @@
 	animation: fly 30s infinite alternate;
 }
 
-#block {
-    z-index: 1;
-}
 
 #cloud2 {
 	position:relative;
 	top: calc(50vh - 100px);
 	left: calc(50vw - 200px);
     animation: fly2 30s infinite alternate;
-    z-index: 2;
+}
+
+#gover_screen {
+    filter: blur(0);
 }
 
 @keyframes fly {

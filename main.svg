@@ -13,6 +13,29 @@
 
   <script xlink:href="clock.js" />
 
+
+	<defs>
+	  <filter id="filter" x="0" y="0">
+	  <feGaussianBlur stdDeviation=".4"/>
+	</filter>
+	
+ </defs>
+
+  <circle id="cloud" cx="350" cy="80" r="25" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="330" cy="120" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="290" cy="100" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="380" cy="125" r="15" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="420" cy="115" r="17" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud" cx="405" cy="65" r="13" fill="#ffccff" filter="url(#filter)"/>
+
+  <circle id="cloud2" cx="550" cy="300" r="25" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="570" cy="340" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="590" cy="300" r="20" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="520" cy="325" r="15" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="480" cy="315" r="17" fill="#ffccff" filter="url(#filter)"/>
+  <circle id="cloud2" cx="495" cy="265" r="13" fill="#ffccff" filter="url(#filter)"/>
+    
+
   <rect class="floor" x="0" y="594" width="550" height="6" style="fill:blue; opacity: 0.5" />
   <rect class="floor" x="780" y="594" width="120" height="6" style="fill:blue; opacity: 0.5" />
   <rect class="floor" x="550" y="580" width="230" height="20" style="fill: #5e91fe" />
@@ -42,41 +65,41 @@
 
   <rect class="flag" x="850" y="525" width="37" height="70" fill="url(#flag)" />
 
+
+  <rect class="gover_screen" x="210" y="140" width="480" height="360" fill="url(#g_over)" style="opacity: 1" />
+  <rect id="button" onclick="tmp(evt)" x="370" y="380" width="160" height="40" style="opacity: 0"/>
+
+  <script type="text/emacsript">
+  <![CDATA[
+
+  function tmp(evt){
+    var element = document.querySelector('#button');
+    element.setAttribute("style", "fill: red; opacity: 1");
+  }
+  
+  ]]>
+  </script>
+
   <rect class="stopwatch" x="0" y="0" width="100" height="45" style="fill: white; opacity: 0.5" />
 
   <defs>
-    <pattern id="block" patternUnits="objectBoundingBox" width="20" height="20">
+    <pattern id="block" patternUnits="objectBoundingBox" width="1" height="1">
       <image xlink:href="block.png" x="0" y="0" width="20" height="20" />
     </pattern>
   </defs>
 
   <defs>
-    <pattern id="flag" patternUnits="objectBoundingBox" width="37" height="70">
+    <pattern id="flag" patternUnits="objectBoundingBox" width="1" height="1">
       <image xlink:href="flag.png" x="0" y="0" width="37" height="70" />
     </pattern>
   </defs>
 
-	<defs>
-	<filter id="filter" x="0" y="0">
-	<feGaussianBlur stdDeviation=".4"/>
-	</filter>
-	
- </defs>
+  <defs>
+    <pattern id="g_over" patternUnits="objectBoundingBox" width="1" height="1">
+      <image xlink:href="game_over.png" x="0" y="0" width="480" height="360" />
+    </pattern>
+  </defs>
 
-  <circle id="cloud" cx="350" cy="80" r="25" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="330" cy="120" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="290" cy="100" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="380" cy="125" r="15" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="420" cy="115" r="17" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="405" cy="65" r="13" fill="#ffccff" filter="url(#filter)"/>
-
-  <circle id="cloud2" cx="550" cy="280" r="25" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="570" cy="320" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="590" cy="280" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="520" cy="305" r="15" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="480" cy="295" r="17" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="495" cy="245" r="13" fill="#ffccff" filter="url(#filter)"/>
-    
 
 
 </svg>
