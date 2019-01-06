@@ -56,9 +56,44 @@ class Player extends Entity {
         this.leftMovement = next.left;
 
 
-        if (!prev.space && next.space) {
+        if (next.space) {
             this.jump = true;
         }
+
+        if (!next.space) {
+            this.jump = false;
+        }
+    }
+
+    isTouchingFloorLeft(x, y, floor) {
+        if (y + this.getHeight() <= floor.getY()) return false;
+        if (y >= floor.getY() + floor.getHeight()) return false;
+        
+        const pX = x + this.getWidth();
+        return (pX - floor.getX() > -0.5);
+    }
+
+    isTouchingFloorRight(x, y, floor) {
+        if (y + this.getHeight() <= floor.getY()) return false;
+        if (y >= floor.getY() + floor.getHeight()) return false;
+    
+        return (x - (floor.getX() + floor.getWidth()) < -0.5); 
+    }
+
+    willTouchFloor(delta) {
+        for (let floor of floors) {
+            if (!this.isTouchingFloorLeft(this.getX(), this.getY(), floor)
+                && this.isTouchingFloorLeft(this.getX() + delta, this.getY(), floor)) {
+                return true;
+            }
+
+            if (!this.isTouchingFloorRight(this.getX(), this.getY(), floor)
+                && this.isTouchingFloorRight(this.getX() + delta, this.getY(), floor)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     moveSides() {
@@ -68,6 +103,11 @@ class Player extends Entity {
         }
         if (this.leftMovement) {
             delta -= this.sideSpeed;
+        }
+
+        const d = this.willTouchFloor(delta);
+        if(d) {
+            delta = 0;
         }
 
         this.setX(this.getX() + delta);
@@ -80,27 +120,51 @@ class Player extends Entity {
         if (pX < floor.getX()) return false;
         if (x > floor.getX() + floor.getWidth()) return false;
 
-        if (pY - floor.getY() > -0.5) {
-            return true;
+        return pY - floor.getY() > -0.5;
+    }
+
+    willBeOnFloor(delta) {
+        for (let floor of floors) {
+            if (!this.isAfterFloor(this.getX(), this.getY(), floor)
+                && this.isAfterFloor(this.getX(), this.getY() + delta, floor)) {
+                return true;
+            }
         }
 
         return false;
     }
+
+    isUnderCeil(x, y,  floor) {
+        const pX = x + this.getWidth();
+
+        if (pX < floor.getX()) return false;
+        if (x > floor.getX() + floor.getWidth()) return false;
+
+        return y - (floor.getY() + floor.getHeight()) < -0.5;
+    }
+
+    willTouchCeil(delta) {
+        for (let floor of floors) {
+            if (!this.isUnderCeil(this.getX(), this.getY(), floor)
+                && this.isUnderCeil(this.getX(), this.getY() + delta, floor)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     update() {
         this.moveSides();
         
         this.currentVelocity += GravityFactor;
-        if (this.jump) {
+        if (this.jump && this.willBeOnFloor(GravityFactor)) {
             this.currentVelocity = -this.jumpSpeed;
             this.jump = false;
         }
 
-        for (let floor of floors) {
-            if (!this.isAfterFloor(this.getX(), this.getY(), floor)
-                && this.isAfterFloor(this.getX(), this.getY() + this.currentVelocity, floor)) {
-                this.currentVelocity = 0;
-                break;
-            }
+        if (this.willBeOnFloor(this.currentVelocity) || this.willTouchCeil(this.currentVelocity)) {
+            this.currentVelocity = 0;
         }
         
 
