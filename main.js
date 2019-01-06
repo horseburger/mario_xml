@@ -41,6 +41,10 @@ class Entity {
     shouldStopHorizontally() {
         return true;
     }
+
+    shouldStopVertically() {
+        return true;
+    }
 }
 
 class Flag extends Entity {
@@ -58,6 +62,10 @@ class Flag extends Entity {
     }
 
     shouldStopHorizontally() {
+        return false;
+    }
+
+    shouldStopVertically() {
         return false;
     }
 }
@@ -196,7 +204,7 @@ class Player extends Entity {
 
         const stop = this.willBeOnFloor(this.currentVelocity) || this.willTouchCeil(this.currentVelocity);
         if (stop) {
-            this.currentVelocity = 0; // floor and ceiling collision
+            this.currentVelocity = stop.shouldStopVertically() ? 0 : this.currentVelocity; // floor and ceiling collision
             stop.onPlayerTouch();
         }
         
@@ -226,14 +234,14 @@ function buttonsStateChanged(prev, next)  {
 
 function gameOver() {
     GameState = State.Died;
-    document.querySelector('.gameOverBox').style.display = 'block';
-    document.querySelector('.restartGame').style.display = 'block';
+    document.querySelector('#gameOverBox').style.display = 'block';
+    document.querySelector('#restartGame').style.display = 'block';
 }
 
 function gameWin() {
     GameState = State.Win;
     document.querySelector('.gameWinBox').style.display = 'block';
-    document.querySelector('.restartGame').style.display = 'block';
+    document.querySelector('#restartGame').style.display = 'block';
 }
 
 function mainLoop() {
@@ -272,9 +280,9 @@ function onKeyUp(e) {
 function onGameRestart(e) {
     player.setX(player.baseX);
     player.setY(player.baseY);
-    document.querySelector('.gameOverBox').style.display = 'none';
+    document.querySelector('#gameOverBox').style.display = 'none';
     document.querySelector('.gameWinBox').style.display = 'none';
-    document.querySelector('.restartGame').style.display = 'none';
+    document.querySelector('#restartGame').style.display = 'none';
     GameState = State.Running;
     flags.forEach((f) => f.wasTouched = false);
     mainLoop();
@@ -282,7 +290,7 @@ function onGameRestart(e) {
 
 document.addEventListener('keydown', onKeyDown)
 document.addEventListener('keyup', onKeyUp);
-document.addEventListener('click', onGameRestart);
+document.querySelector('#restartGame').addEventListener('click', onGameRestart);
 requestAnimationFrame(mainLoop);
 
 function isEpsilon(number) {
