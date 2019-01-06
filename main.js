@@ -61,7 +61,7 @@ class Flag extends Entity {
         if (!this.wasTouched) {
             this.wasTouched = true;
             stopwatch.stop();
-            setTimeout(() => gameWin(), 1000);
+            gameWin();
         }
         
     }
@@ -85,8 +85,8 @@ class Player extends Entity {
         super(svg);
         this.baseX  = this.getX();
         this.baseY = this.getY();
-        this.sideSpeed = 5.0;
-        this.jumpSpeed = 15;
+        this.sideSpeed = 4.0;
+        this.jumpSpeed = 11;
         
         this.rightMovement = false;
         this.leftMovement = false;
@@ -246,7 +246,7 @@ function gameOver() {
 
 function gameWin() {
     GameState = State.Win;
-    document.querySelector('.gameWinBox').style.display = 'block';
+    document.querySelector('#gameWinBox').style.display = 'block';
     document.querySelector('#restartGame').style.display = 'block';
 }
 
@@ -287,7 +287,7 @@ function onGameRestart(e) {
     player.setX(player.baseX);
     player.setY(player.baseY);
     document.querySelector('#gameOverBox').style.display = 'none';
-    document.querySelector('.gameWinBox').style.display = 'none';
+    document.querySelector('#gameWinBox').style.display = 'none';
     document.querySelector('#restartGame').style.display = 'none';
     GameState = State.Running;
     flags.forEach((f) => f.wasTouched = false);

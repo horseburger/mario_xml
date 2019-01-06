@@ -31,10 +31,11 @@
 
 #restartGame {
 	display: none;
-	opacity: 0;
+	opacity: 1;
 	fill:rgba(200, 0, 0, 0.5);
 }
 
 #restartGame:hover {
 	opacity: 1;
+	fill:rgba(240, 0, 0, 0.5);
 }
