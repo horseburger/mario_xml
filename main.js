@@ -1,9 +1,9 @@
-
-
-
-
 let buttonsState = {'right': false, 'left': false, 'space': false};
 const GravityFactor = 0.5;
+const Width = 800;
+const Height = 600;
+const State = {'Running': 1, 'Died': 2, 'Win': 3}
+let GameState = State.Running;
 
 class Entity {
     constructor(svg) {
@@ -33,11 +33,40 @@ class Entity {
     getHeight() {
         return parseFloat(this.svg.getAttribute("height"));
     }
+
+    onPlayerTouch() {
+
+    }
+
+    shouldStopHorizontally() {
+        return true;
+    }
+}
+
+class Flag extends Entity {
+    constructor(svg) {
+        super(svg);
+        this.wasTouched = false;
+    }
+
+    onPlayerTouch() {
+        if (!this.wasTouched) {
+            this.wasTouched = true;
+            setTimeout(() => gameWin(), 1000);
+        }
+        
+    }
+
+    shouldStopHorizontally() {
+        return false;
+    }
 }
 
 
-const floors = [...document.querySelectorAll('.floor')].map((f) => new Entity(f));
 
+const base = [...document.querySelectorAll('.floor')].map((f) => new Entity(f));
+const flags = [...document.querySelectorAll('.flag')].map((f) => new Flag(f));
+const floors = [...base, ...flags];
 class Player extends Entity {
     constructor(svg) {
         super(svg);
@@ -84,16 +113,16 @@ class Player extends Entity {
         for (let floor of floors) {
             if (!this.isTouchingFloorLeft(this.getX(), this.getY(), floor)
                 && this.isTouchingFloorLeft(this.getX() + delta, this.getY(), floor)) {
-                return true;
+                return floor;
             }
 
             if (!this.isTouchingFloorRight(this.getX(), this.getY(), floor)
                 && this.isTouchingFloorRight(this.getX() + delta, this.getY(), floor)) {
-                return true;
+                return floor;
             }
         }
 
-        return false;
+        return null;
     }
 
     moveSides() {
@@ -107,7 +136,8 @@ class Player extends Entity {
 
         const d = this.willTouchFloor(delta);
         if(d) {
-            delta = 0;
+            d.onPlayerTouch();
+            delta = d.shouldStopHorizontally() ? 0 : delta;
         }
 
         this.setX(this.getX() + delta);
@@ -127,11 +157,11 @@ class Player extends Entity {
         for (let floor of floors) {
             if (!this.isAfterFloor(this.getX(), this.getY(), floor)
                 && this.isAfterFloor(this.getX(), this.getY() + delta, floor)) {
-                return true;
+                return floor;
             }
         }
 
-        return false;
+        return null;
     }
 
     isUnderCeil(x, y,  floor) {
@@ -147,31 +177,39 @@ class Player extends Entity {
         for (let floor of floors) {
             if (!this.isUnderCeil(this.getX(), this.getY(), floor)
                 && this.isUnderCeil(this.getX(), this.getY() + delta, floor)) {
-                return true;
+                return floor;
             }
         }
 
-        return false;
+        return null;
     }
 
-    update() {
-        this.moveSides();
-        
+
+    moveVertical() {
         this.currentVelocity += GravityFactor;
         if (this.jump && this.willBeOnFloor(GravityFactor)) {
             this.currentVelocity = -this.jumpSpeed;
             this.jump = false;
         }
 
-        if (this.willBeOnFloor(this.currentVelocity) || this.willTouchCeil(this.currentVelocity)) {
-            this.currentVelocity = 0;
+        const stop = this.willBeOnFloor(this.currentVelocity) || this.willTouchCeil(this.currentVelocity);
+        if (stop) {
+            this.currentVelocity = 0; // floor and ceiling collision
+            stop.onPlayerTouch();
         }
         
-
         this.setY(this.getY() + this.currentVelocity);
+    }
 
+    update() {
+        if (this.getY() > Height) {
+            gameOver();
+        }
+        this.moveSides();
+        this.moveVertical();
     }
 }
+
 
 
 const player = new Player(document.querySelector('#player'));
@@ -184,9 +222,23 @@ function buttonsStateChanged(prev, next)  {
     player.onButtonsStateChanged(prev, next);
 }
 
+function gameOver() {
+    GameState = State.Died;
+    document.querySelector('.gameOverBox').style.display = 'block';
+    document.querySelector('.restartGame').style.display = 'block';
+}
+
+function gameWin() {
+    GameState = State.Win;
+    document.querySelector('.gameWinBox').style.display = 'block';
+    document.querySelector('.restartGame').style.display = 'block';
+}
+
 function mainLoop() {
-    update();
-    requestAnimationFrame(mainLoop);
+    if (GameState == State.Running) {
+        update();
+        requestAnimationFrame(mainLoop);
+    }
 }
 
 function onKeyDown(e) {
