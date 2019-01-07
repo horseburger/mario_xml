@@ -36,8 +36,8 @@
   <circle id="cloud2" cx="495" cy="265" r="13" fill="#ffccff" filter="url(#filter)"/>
     
 
-  <rect class="floor" x="0" y="594" width="550" height="6" style="fill:blue; opacity: 0.5" />
-  <rect class="floor" x="780" y="594" width="120" height="6" style="fill:blue; opacity: 0.5" />
+  <rect class="floor" x="0" y="594" width="550" height="6" style="opacity: 0" />
+  <rect class="floor" x="780" y="594" width="120" height="6" style="opacity: 0"/>
   <rect  x="550" y="580" width="230" height="20" style="fill: #5e91fe" />
   
 
