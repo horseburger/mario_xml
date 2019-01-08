@@ -1,45 +1,63 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <?xml-stylesheet href="styles.css" type="text/css"?>
-
-
 <svg xmlns:xlink="http://www.w3.org/1999/xlink"
      xmlns:xs="http://www.w3.org/2001/XMLSchema"
      xmlns:math="http://www.w3.org/2005/xpath-functions/math"
      xmlns="http://www.w3.org/2000/svg"
      width="900"
      height="600"
-     style="background-image: url(bg.png); background-repeat: repeat-x; background-position: bottom">
+     >
+  <defs>
+    <linearGradient id="background" x1="0" y1="0%" x2="0" y2="100%">
+      <stop offset="0%" stop-color="yellow" />
+      <stop offset="100%" stop-color="#1e90ff"/>
+    </linearGradient>
+    <pattern id="block" patternUnits="objectBoundingBox" width="1" height="1">
+      <image xlink:href="block.png" x="0" y="0" width="20" height="20" />
+    </pattern>
+    <pattern id="flag" patternUnits="objectBoundingBox" width="1" height="1">
+      <image xlink:href="flag.png" x="0" y="0" width="37" height="70" />
+    </pattern>
+    <pattern id="g_over" patternUnits="objectBoundingBox" width="1" height="1">
+      <image xlink:href="game_over.png" x="0" y="0" width="480" height="360" />
+    </pattern>
+    <pattern id="mag" patternUnits="objectBoundingBox" width="1" height="1">
+      <image xlink:href="mag_czarodziej.png" x="0" y="0" width="23" height="35" />
+    </pattern>
+    <pattern id="win" patternUnits="objectBoundingBox" width="1" height="1">
+      <image xlink:href="you_win.png" x="0" y="0" width="255" height="255" />
+    </pattern>
+  </defs>
 
-  <!-- <script xlink:href="clock.js" /> -->
+  <rect x="0" y="0" width="900" height="600" fill="url(#background)" />
+  <rect id="player" x="50" y="525" width="23" height="35" fill="url(#mag)"/>
+  <rect class="flag" x="850" y="525" width="37" height="70" fill="url(#flag)" />
 
+  <svg class="cloud">
+    <circle cx="20" cy="100" r="20" />
+    <circle cx="80" cy="80" r="25"/>
+    <circle cx="135" cy="65" r="13" />
+    <circle cx="150" cy="115" r="17" />
+    <circle cx="110" cy="125" r="15" />
+    <circle cx="60" cy="120" r="20" />
+    <animate attributeName="x" from="-170" to="900" begin="0s" dur="10s" repeatCount="indefinite" />
+  </svg>
 
-	<defs>
-	  <filter id="filter" x="0" y="0">
-	  <feGaussianBlur stdDeviation=".4"/>
-	</filter>
-	
- </defs>
-
-  <circle id="cloud" cx="350" cy="80" r="25" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="330" cy="120" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="290" cy="100" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="380" cy="125" r="15" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="420" cy="115" r="17" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud" cx="405" cy="65" r="13" fill="#ffccff" filter="url(#filter)"/>
-
-  <circle id="cloud2" cx="550" cy="300" r="25" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="570" cy="340" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="590" cy="300" r="20" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="520" cy="325" r="15" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="480" cy="315" r="17" fill="#ffccff" filter="url(#filter)"/>
-  <circle id="cloud2" cx="495" cy="265" r="13" fill="#ffccff" filter="url(#filter)"/>
+  <svg class="cloud">
+    <circle cx="150" cy="300" r="25" />
+    <circle cx="170" cy="340" r="20" />
+    <circle cx="190" cy="300" r="20" />
+    <circle cx="120" cy="325" r="15" />
+    <circle cx="80" cy="315" r="17" />
+    <circle cx="95" cy="265" r="13" />
+    <animate attributeName="x" from="1300" to="-220" begin="0s" dur="7s" repeatCount="indefinite" />
+  </svg>
+  
+  
     
-
   <rect class="floor" x="0" y="594" width="550" height="6" style="fill:blue; opacity: 0.5" />
   <rect class="floor" x="780" y="594" width="120" height="6" style="fill:blue; opacity: 0.5" />
-  <rect  x="550" y="580" width="230" height="20" style="fill: #5e91fe" />
-  
 
   <rect class="floor" x="200" y="530" width="20" height="20" fill="url(#block)"/>
 
@@ -54,8 +72,6 @@
   <rect class="floor" x="210" y="380" width="20" height="20" fill="url(#block)"/>
   <rect class="floor" x="230" y="380" width="20" height="20" fill="url(#block)"/>
 
-
-
   <rect class="floor" x="400" y="350" width="20" height="20" fill="url(#block)"/>
   <rect class="floor" x="420" y="350" width="20" height="20" fill="url(#block)"/>
   <rect class="floor" x="440" y="350" width="20" height="20" fill="url(#block)"/>
@@ -63,51 +79,21 @@
   <rect class="floor" x="480" y="350" width="20" height="20" fill="url(#block)"/>
   <rect class="floor" x="500" y="350" width="20" height="20" fill="url(#block)"/>
 
-  <rect class="flag" x="850" y="525" width="37" height="70" fill="url(#flag)" />
-
-
+  <!-- #################### UI -->
+  <rect class="overlayBox" x="200" y="130" width="500" height="370" fill="black" rx="10"/>
   <rect id="gameWinBox" x="325" y="240" width="480" height="360" fill="url(#win)" style="display: none;" />
   <rect id="gameOverBox" x="210" y="140" width="480" height="360" fill="url(#g_over)" style="display: none;" />
-  <rect id="restartGame" x="370" y="380" width="170" height="40" />
-
-  <rect id="player" x="50" y="525" width="23" height="35" fill="url(#mag)"/>
-
+  <rect id="restartGame" x="370" y="380" width="180" height="40" />
+  <text id="restart" class="ui" x="370" y="420" font-family="Verdana" font-size="30" fill="white">
+    <tspan dx="20" dy="-10">
+      Restart
+    </tspan>
+  </text>
   <rect class="stopwatchBox" x="0" y="0" width="130" height="45" style="fill: white; opacity: 0.5" />
-  <text class="stopwatchText" x="10" y="30" font-size="30" fill="black">
+  <text class="stopwatchText" x="10" y="30" font-size="30" fill="black" text-decoration="underline">
     00:00
   </text>
-  <defs>
-    <pattern id="block" patternUnits="objectBoundingBox" width="1" height="1">
-      <image xlink:href="block.png" x="0" y="0" width="20" height="20" />
-    </pattern>
-  </defs>
-
-  <defs>
-    <pattern id="flag" patternUnits="objectBoundingBox" width="1" height="1">
-      <image xlink:href="flag.png" x="0" y="0" width="37" height="70" />
-    </pattern>
-  </defs>
-
-  <defs>
-    <pattern id="g_over" patternUnits="objectBoundingBox" width="1" height="1">
-      <image xlink:href="game_over.png" x="0" y="0" width="480" height="360" />
-    </pattern>
-  </defs>
-
-    <defs>
-    <pattern id="mag" patternUnits="objectBoundingBox" width="1" height="1">
-      <image xlink:href="mag_czarodziej.png" x="0" y="0" width="23" height="35" />
-    </pattern>
-  </defs>
-
-  <defs>
-    <pattern id="win" patternUnits="objectBoundingBox" width="1" height="1">
-      <image xlink:href="you_win.png" x="0" y="0" width="255" height="255" />
-    </pattern>
-  </defs>
-
 
   <script xlink:href="clock.js" />
   <script xlink:href="main.js" />
-
 </svg>

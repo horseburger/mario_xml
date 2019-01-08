@@ -1,37 +1,22 @@
-
-#cloud {
-	position:relative;
-	top: calc(50vh - 100px);
-	left: calc(50vw - 200px);
-	animation: fly 30s infinite alternate;
-}
-
-
-#cloud2 {
-	position:relative;
-	top: calc(50vh - 100px);
-	left: calc(50vw - 200px);
-    animation: fly2 30s infinite alternate;
-}
-
-@keyframes fly {
-	0% {transform: translateX(-250px)}
-	100% {transform: translateX(400px)}
-}
-
-@keyframes fly2 {
-	0% {transform: translateX(400px)}
-	100% {transform: translateX(-350px)}
-}
-
-
-#restartGame {
+#restartGame, .overlayBox {
 	display: none;
-	opacity: 1;
-	fill:rgba(200, 0, 0, 0.5);
+	fill:#000000;
 }
 
 #restartGame:hover {
 	opacity: 1;
-	fill:rgba(240, 0, 0, 0.5);
+}
+
+.cloud {
+	fill: rgba(255, 182, 255, 1);
+	opacity: 0.5;
+}
+
+#restart {
+	display: none;
+}
+
+#restart tspan:hover {
+	text-decoration: line-through;
+	cursor: pointer;
 }

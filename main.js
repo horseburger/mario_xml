@@ -241,6 +241,8 @@ function gameOver() {
     GameState = State.Died;
     document.querySelector('#gameOverBox').style.display = 'block';
     document.querySelector('#restartGame').style.display = 'block';
+    document.querySelector('#restart').style.display = 'block';
+    document.querySelector('.overlayBox').style.display = 'block';
     stopwatch.stop();
 }
 
@@ -248,6 +250,8 @@ function gameWin() {
     GameState = State.Win;
     document.querySelector('#gameWinBox').style.display = 'block';
     document.querySelector('#restartGame').style.display = 'block';
+    document.querySelector('#restart').style.display = 'block';
+    document.querySelector('.overlayBox').style.display = 'block';
 }
 
 function mainLoop() {
@@ -289,6 +293,8 @@ function onGameRestart(e) {
     document.querySelector('#gameOverBox').style.display = 'none';
     document.querySelector('#gameWinBox').style.display = 'none';
     document.querySelector('#restartGame').style.display = 'none';
+    document.querySelector('#restart').style.display = 'none';
+    document.querySelector('.overlayBox').style.display = 'none';
     GameState = State.Running;
     flags.forEach((f) => f.wasTouched = false);
     stopwatch.restart();
@@ -298,6 +304,7 @@ function onGameRestart(e) {
 document.addEventListener('keydown', onKeyDown)
 document.addEventListener('keyup', onKeyUp);
 document.querySelector('#restartGame').addEventListener('click', onGameRestart);
+document.querySelector('#restart').addEventListener('click', onGameRestart);
 requestAnimationFrame(mainLoop);
 
 
